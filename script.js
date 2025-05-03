@@ -107,3 +107,70 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
       link.click();
     });
   }
+
+  function saveAsImage() {
+    // ステップ確認ダイアログを表示
+    document.getElementById('confirm-dialog').classList.remove('hidden');
+  }
+  
+  function cancelSave() {
+    document.getElementById('confirm-dialog').classList.add('hidden');
+  }
+  
+  function proceedToSave() {
+    document.getElementById('confirm-dialog').classList.add('hidden');
+  
+    const timestamp = getCurrentTimestamp();
+  
+    html2canvas(document.getElementById('receipt-preview'), { scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `領収書_お客様控え_${timestamp}.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+  
+      generateStoreReceipt(timestamp); // 店舗控えにも日付を渡す
+    });
+  }
+  
+  function generateStoreReceipt(timestamp) {
+    const storeCopy = document.getElementById('receipt-preview').cloneNode(true);
+    storeCopy.querySelector('h2').textContent = '領収書（店舗控え）';
+  
+    const temp = document.createElement('div');
+    temp.style.position = 'absolute';
+    temp.style.left = '-9999px';
+    temp.appendChild(storeCopy);
+    document.body.appendChild(temp);
+  
+    html2canvas(storeCopy, { scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = `領収書_店舗控え_${timestamp}.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+  
+      document.body.removeChild(temp);
+    });
+  }
+
+  function saveAsImage() {
+    // 音声合成で読み上げ
+    const msg = new SpeechSynthesisUtterance("お金は受け取りましたか？ 受け取った場合は次へを押してください。");
+    msg.lang = "ja-JP"; // 日本語指定
+    msg.pitch = 1;      // 声の高さ（0〜3）
+    msg.rate = 1;       // 読み上げ速度（0.1〜10）
+    speechSynthesis.speak(msg);
+  
+    // ダイアログ表示
+    document.getElementById('confirm-dialog').classList.remove('hidden');
+  }
+
+
+  function getCurrentTimestamp() {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const hh = String(now.getHours()).padStart(2, '0');
+    const min = String(now.getMinutes()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
+  }

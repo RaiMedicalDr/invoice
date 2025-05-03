@@ -84,6 +84,13 @@
       <button class="hipo" onclick="saveAsImage()">画像保存</button>
     </div>
   </div>
+  <!-- 確認ダイアログ -->
+<div id="confirm-dialog" class="dialog hidden">
+  <p>お金は受け取りましたか？</p>
+  <button onclick="proceedToSave()">次へ</button>
+  <button onclick="cancelSave()">キャンセル</button>
+</div>
+
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
