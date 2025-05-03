@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <!-- PWA Manifest -->
+<link rel="manifest" href="manifest.json">
+
+<!-- iOS Safari用 -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="請求書アプリ">
+<link rel="apple-touch-icon" href="請求書.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>レジ風 請求書アプリ</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- タスクバー -->
+<div class="taskbar">
+    <div class="taskbar-left">
+      <img src="logo.png" alt="Start" class="start-icon" onclick="toggleStartMenu()" />
+      <div id="start-menu" class="start-menu hidden">
+        <p><a href="404.html" >📁 ドキュメント</a></p>
+        <p><a href="setting.html" >⚙️ 設定</a></p>
+        <p><a href="index.html" >🔓 ログアウト</a></p>
+      </div>
+    </div>
+    <div class="taskbar-right">
+      <span id="clock"></span>
+      <button onclick="toggleCalendar()">📅</button>
+      <div id="calendar-popup" class="calendar hidden">
+        <input type="date" />
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 左：A4領収書プレビュー -->
+    <div class="receipt-a4" id="receipt-preview">
+        <div class="header">
+          <h2>領収書</h2>
+          <p>発行日：<span id="issued-date"></span></p>
+          <p>発行元：Hikonezumi (RAIA)</p>
+        </div>
+      
+        <div class="customer">
+          <p>御中：お客様各位</p>
+        </div>
+      
+        <div class="amount-box">
+          <p>金額：<strong>¥<span id="receipt-total">0</span></strong>（税込）</p>
+        </div>
+      
+        <div class="details">
+          <table>
+            <thead>
+              <tr><th>品目</th><th>金額</th></tr>
+            </thead>
+            <tbody id="receipt-list">
+              <!-- JSで生成 -->
+            </tbody>
+          </table>
+        </div>
+      
+        <div class="footer">
+          <p>上記の通り、正に領収いたしました。</p>
+          <div class="stamp">★印★</div>
+        </div>
+      </div>
+
+    <!-- 右：電卓UI -->
+    <div class="app">
+        <div class="header-bar">
+            <h1>請求入力</h1>
+             <a class="reload-btn" href="home.html">🔄</a>
+          </div>
+
+      <div class="item-buttons">
+        <button onclick="selectItem('生活費')">生活費</button>
+        <button onclick="selectItem('商品')">商品</button>
+        <button onclick="selectItem('マネー')">マネー</button>
+        <button onclick="selectItem('その他')">その他</button>
+      </div>
+
+      <div class="display">
+        <span id="selected-item">未選択</span>：
+        ¥<span id="input-amount">0</span>
+      </div>
+
+      <div class="numpad">
+        <button onclick="appendNumber(1)">1</button>
+        <button onclick="appendNumber(2)">2</button>
+        <button onclick="appendNumber(3)">3</button>
+        <button onclick="appendNumber(4)">4</button>
+        <button onclick="appendNumber(5)">5</button>
+        <button onclick="appendNumber(6)">6</button>
+        <button onclick="appendNumber(7)">7</button>
+        <button onclick="appendNumber(8)">8</button>
+        <button onclick="appendNumber(9)">9</button>
+        <button onclick="clearAmount()">C</button>
+        <button onclick="appendNumber(0)">0</button>
+        <button onclick="confirmItem()">OK</button>
+      </div>
+
+      
+      <button class="hipo" onclick="saveAsImage()">画像保存</button>
+    </div>
+  </div>
+  <!-- 確認ダイアログ -->
+<div id="confirm-dialog" class="dialog hidden">
+  <p>お金は受け取りましたか？</p>
+  <button onclick="proceedToSave()">次へ</button>
+  <button onclick="cancelSave()">キャンセル</button>
+</div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+  <script>function updateClock() {
+    const now = new Date();
+    const clock = document.getElementById('clock');
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    clock.textContent = `${h}:${m}`;
+  }
+  
+  setInterval(updateClock, 1000);
+  updateClock();
+  
+  function toggleCalendar() {
+    document.getElementById('calendar-popup').classList.toggle('hidden');
+  }
+  
+  function toggleStartMenu() {
+    document.getElementById('start-menu').classList.toggle('hidden');
+  }</script>
+
+  <script>const clickSound = new Audio('click.mp3'); // 効果音ファイルのパス
+clickSound.volume = 0.5; // 音量（0〜1）</script>
+</body>
+</html>

@@ -1,99 +1,83 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-
-<!-- iOS Safari用 -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="請求書アプリ">
-<link rel="apple-touch-icon" href="請求書.png">
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>レジ風 請求書アプリ</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LOGIN</title>
+  <style>
+    body {
+      background-color: #000;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      padding: 2rem;
+    }
+
+    #console {
+      white-space: pre-wrap;
+    }
+
+    input {
+      background: transparent;
+      border: none;
+      color: #00ff00;
+      font-family: 'Courier New', monospace;
+      font-size: 1.2rem;
+      outline: none;
+      caret-color: #00ff00;
+    }
+
+    input[type="password"] {
+      -webkit-text-security: disc;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <!-- 左：A4領収書プレビュー -->
-    <div class="receipt-a4" id="receipt-preview">
-        <div class="header">
-          <h2>領収書</h2>
-          <p>発行日：<span id="issued-date"></span></p>
-          <p>発行元：Hikonezumi (RAIA)</p>
-        </div>
-      
-        <div class="customer">
-          <p>御中：お客様各位</p>
-        </div>
-      
-        <div class="amount-box">
-          <p>金額：<strong>¥<span id="receipt-total">0</span></strong>（税込）</p>
-        </div>
-      
-        <div class="details">
-          <table>
-            <thead>
-              <tr><th>品目</th><th>金額</th></tr>
-            </thead>
-            <tbody id="receipt-list">
-              <!-- JSで生成 -->
-            </tbody>
-          </table>
-        </div>
-      
-        <div class="footer">
-          <p>上記の通り、正に領収いたしました。</p>
-          <div class="stamp">★印★</div>
-        </div>
-      </div>
-
-    <!-- 右：電卓UI -->
-    <div class="app">
-      <h1>請求入力</h1>
-
-      <div class="item-buttons">
-        <button onclick="selectItem('生活費')">生活費</button>
-        <button onclick="selectItem('商品')">商品</button>
-        <button onclick="selectItem('マネー')">マネー</button>
-        <button onclick="selectItem('その他')">その他</button>
-      </div>
-
-      <div class="display">
-        <span id="selected-item">未選択</span>：
-        ¥<span id="input-amount">0</span>
-      </div>
-
-      <div class="numpad">
-        <button onclick="appendNumber(1)">1</button>
-        <button onclick="appendNumber(2)">2</button>
-        <button onclick="appendNumber(3)">3</button>
-        <button onclick="appendNumber(4)">4</button>
-        <button onclick="appendNumber(5)">5</button>
-        <button onclick="appendNumber(6)">6</button>
-        <button onclick="appendNumber(7)">7</button>
-        <button onclick="appendNumber(8)">8</button>
-        <button onclick="appendNumber(9)">9</button>
-        <button onclick="clearAmount()">C</button>
-        <button onclick="appendNumber(0)">0</button>
-        <button onclick="confirmItem()">OK</button>
-      </div>
-
-      
-      <button class="hipo" onclick="saveAsImage()">画像保存</button>
-    </div>
+  <div id="console">
+    <div id="line1">LOGIN ID: <input type="text" id="userid" autofocus /></div>
+    <div id="line2" class="hidden">PASSWORD: <input type="password" id="password" /></div>
+    <div id="line3" class="hidden">ログイン確認中...</div>
+    <div id="error" style="color: red;"></div>
   </div>
-  <!-- 確認ダイアログ -->
-<div id="confirm-dialog" class="dialog hidden">
-  <p>お金は受け取りましたか？</p>
-  <button onclick="proceedToSave()">次へ</button>
-  <button onclick="cancelSave()">キャンセル</button>
-</div>
 
+  <script>
+    const ADMIN_ID = "admin";
+    const ADMIN_PASS = "pass3734771A";
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
+    const idInput = document.getElementById('userid');
+    const passInput = document.getElementById('password');
+    const line2 = document.getElementById('line2');
+    const line3 = document.getElementById('line3');
+    const errorMsg = document.getElementById('error');
+
+    idInput.addEventListener('keydown', function (e) {
+      if (e.key === "Enter") {
+        if (idInput.value.trim() === "") return;
+        line2.classList.remove("hidden");
+        passInput.focus();
+      }
+    });
+
+    passInput.addEventListener('keydown', function (e) {
+      if (e.key === "Enter") {
+        const id = idInput.value.trim();
+        const pass = passInput.value;
+
+        line3.classList.remove("hidden");
+
+        setTimeout(() => {
+          if (id === ADMIN_ID && pass === ADMIN_PASS) {
+            window.location.href = "home.html";
+          } else {
+            errorMsg.textContent = "アクセス拒否：IDまたはパスワードが間違っています。";
+          }
+        }, 1000);
+      }
+    });
+  </script>
 </body>
 </html>

@@ -19,6 +19,10 @@ function appendNumber(num) {
   if (inputAmount.length < 7) {
     inputAmount += num;
     amountDisplay.textContent = parseInt(inputAmount).toLocaleString();
+
+    // 効果音を再生（cloneして連打対応）
+    const sound = clickSound.cloneNode(); 
+    sound.play();
   }
 }
 
@@ -154,7 +158,7 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
 
   function saveAsImage() {
     // 音声合成で読み上げ
-    const msg = new SpeechSynthesisUtterance("お金は受け取りましたか？ 受け取った場合は次へを押してください。");
+    const msg = new SpeechSynthesisUtterance("お金は受け取りましたか？ 受け取った場合は次へを押してください。受け取っていない場合はキャンセルが可能です。");
     msg.lang = "ja-JP"; // 日本語指定
     msg.pitch = 1;      // 声の高さ（0〜3）
     msg.rate = 1;       // 読み上げ速度（0.1〜10）
@@ -174,3 +178,4 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
     const min = String(now.getMinutes()).padStart(2, '0');
     return `${yyyy}-${mm}-${dd}_${hh}-${min}`;
   }
+  
