@@ -161,3 +161,14 @@ body {
     margin-top: 1rem;
     font-size: 1.5rem;
   }
+
+  .hipo {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }

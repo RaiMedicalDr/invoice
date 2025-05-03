@@ -98,3 +98,12 @@ document.getElementById('generate-pdf').addEventListener('click', async () => {
       pdf.save('領収書.pdf');
     });
   });
+
+  function saveAsImage() {
+    html2canvas(document.getElementById('receipt-preview'), { scale: 2 }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = '領収書.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
