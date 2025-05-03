@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #f0f0f0;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  /* 左側：プレビュー */
+  .preview-area {
+    flex: 1;
+    padding: 2rem;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid #ccc;
+  }
+  
+  .receipt-a4 {
+    width: 794px;
+    height: 1123px;
+    border: 1px solid #000;
+    padding: 2rem;
+    box-sizing: border-box;
+    background: white;
+  }
+  
+  .receipt-a4 h2 {
+    text-align: center;
+    font-size: 2rem;
+  }
+  
+  .receipt-a4 .total {
+    margin-top: 2rem;
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+  
+  /* 右側：アプリ操作UI */
+  .app {
+    width: 600px;
+    padding: 2rem;
+    overflow-y: auto;
+    background: #fafafa;
+  }
+  
+  .item-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  
+  .item-buttons button {
+    padding: 1rem;
+    font-size: 1rem;
+    flex: 1 1 40%;
+  }
+  
+  .display {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  
+  .numpad button {
+    padding: 1.5rem;
+    font-size: 1.5rem;
+    background: #eee;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  button#generate-pdf {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.2rem;
+    background: #2ecc71;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .receipt-a4 {
+    width: 794px;
+    height: 1123px;
+    border: 1px solid #000;
+    padding: 2rem;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  
+  .receipt-a4 h2 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .header p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+  }
+  
+  .customer {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .amount-box {
+    margin: 2rem 0;
+    font-size: 1.8rem;
+    text-align: center;
+    border: 2px dashed #000;
+    padding: 1rem;
+  }
+  
+  .details table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .details th, .details td {
+    border: 1px solid #000;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 1rem;
+  }
+  
+  .footer {
+    text-align: right;
+    margin-top: 3rem;
+    font-size: 1rem;
+  }
+  
+  .stamp {
+    display: inline-block;
+    padding: 1rem;
+    border: 2px solid red;
+    color: red;
+    font-weight: bold;
+    border-radius: 50%;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+  }
