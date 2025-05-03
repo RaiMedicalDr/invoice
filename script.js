@@ -81,3 +81,20 @@ function renderReceipt() {
 
   receiptTotal.textContent = total.toLocaleString();
 }
+
+document.getElementById('generate-pdf').addEventListener('click', async () => {
+    const { jsPDF } = window.jspdf;
+    const receiptElement = document.getElementById('receipt-preview');
+  
+    // HTMLをCanvasに変換
+    html2canvas(receiptElement, { scale: 2 }).then(canvas => {
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF('p', 'pt', 'a4');
+      const pageWidth = pdf.internal.pageSize.getWidth();
+      const pageHeight = pdf.internal.pageSize.getHeight();
+  
+      // キャンバス画像をA4サイズで挿入
+      pdf.addImage(imgData, 'PNG', 0, 0, pageWidth, pageHeight);
+      pdf.save('領収書.pdf');
+    });
+  });
